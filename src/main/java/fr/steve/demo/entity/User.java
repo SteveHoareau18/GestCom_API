@@ -2,6 +2,7 @@ package fr.steve.demo.entity;
 
 import java.time.LocalDate;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -16,7 +17,7 @@ public class User extends AbstractEntity<User> {
     private Integer id;
     private String name, firstName;
     private LocalDate bornDate;
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     private Address address;
 
     public Integer getId() {

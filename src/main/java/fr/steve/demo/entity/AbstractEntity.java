@@ -1,50 +1,43 @@
 package fr.steve.demo.entity;
 
-import java.lang.reflect.Method;
-import java.util.HashMap;
-import java.util.Map;
+import java.lang.reflect.Field;
 
 public abstract class AbstractEntity<T> {
 
     public AbstractEntity<T> merge(T incoming) {
-        Method[] methods = incoming.getClass().getMethods();
-        Map<String, Method> getters = new HashMap<>();
-        Map<String, Method> setters = new HashMap<>();
-        for (Method method : methods) {
-            if (method.getName().startsWith("get") &&
-                    !method.getName().equals("getClass")) {
-                getters.put(method.getName().replace("get", "").toLowerCase(), method);
-            }
-
-            if (method.getName().startsWith("is")) {
-                getters.put(method.getName().replace("is", "").toLowerCase(), method);
-            }
-
-            if (method.getName().startsWith("set")) {
-                setters.put(method.getName().replace("set", "").toLowerCase(), method);
-            }
-        }
-
-        for (String field : getters.keySet()) {
-
-            if (field.equals("id")) {
-                continue;
-            }
-
-            Method getter = getters.get(field);
-            Method setter = setters.get(field);
-
-            try {
-                Object incomingValue = getter.invoke(incoming);
-                if (incomingValue != null &&
-                        !incomingValue.equals(getter.invoke(this)) &&
-                        setter != null) {
-                    setter.invoke(this, incomingValue);
+        try {
+            Field[] fields = incoming.getClass().getDeclaredFields();
+            for (Field field : fields) {
+                field.setAccessible(true);
+                Object incomingValue = field.get(incoming);
+                Object currentValue = field.get(this);
+                if (!(incomingValue != null && !incomingValue.equals(currentValue)))
+                    continue;
+                if (field.getType().isPrimitive() || field.getType().equals(String.class)) {
+                    field.set(this, incomingValue);
+                } else {
+                    mergeObjects(currentValue, incomingValue);
                 }
-            } catch (Exception ignored) {
+            }
+        } catch (IllegalAccessException | IllegalArgumentException e) {
+            e.printStackTrace();
+        }
+        return this;
+    }
+
+    private void mergeObjects(Object current, Object incoming) throws IllegalAccessException {
+        Field[] fields = incoming.getClass().getDeclaredFields();
+        for (Field field : fields) {
+            field.setAccessible(true);
+            Object incomingValue = field.get(incoming);
+            Object currentValue = field.get(current);
+            if (!(incomingValue != null && !incomingValue.equals(currentValue)) || (int) incomingValue == 0)
+                continue;
+            if (field.getType().isPrimitive() || field.getType().equals(String.class)) {
+                field.set(current, incomingValue);
+            } else {
+                mergeObjects(currentValue, incomingValue);
             }
         }
-
-        return this;
     }
 }
