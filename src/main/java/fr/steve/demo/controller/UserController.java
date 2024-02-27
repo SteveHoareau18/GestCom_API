@@ -1,12 +1,9 @@
 package fr.steve.demo.controller;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
-import org.springframework.http.ResponseEntity;
 import org.springframework.lang.NonNull;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -19,19 +16,15 @@ import org.springframework.web.bind.annotation.RestController;
 import fr.steve.demo.entity.User;
 import fr.steve.demo.exceptions.UserNotFoundException;
 import fr.steve.demo.repository.UserRepository;
-import jakarta.persistence.EntityManager;
-import jakarta.persistence.PersistenceContext;
 import jakarta.transaction.Transactional;
 
 @RestController
 public class UserController {
 
     private UserRepository userRepository;
-    private EntityManager entityManager;
 
-    public UserController(EntityManager entityManager, UserRepository userRepository) {
+    public UserController(UserRepository userRepository) {
         this.userRepository = userRepository;
-        this.entityManager = entityManager;
     }
 
     @GetMapping("/user/list")
