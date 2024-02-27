@@ -9,7 +9,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.ManyToOne;
 
 @Entity
-public class User {
+public class User extends AbstractEntity<User> {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -18,13 +18,6 @@ public class User {
     private LocalDate bornDate;
     @ManyToOne
     private Address address;
-
-    public User(String name, String firstName, LocalDate bornDate, Address address) {
-        this.name = name;
-        this.firstName = firstName;
-        this.bornDate = bornDate;
-        this.address = address;
-    }
 
     public Integer getId() {
         return this.id;

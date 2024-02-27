@@ -6,7 +6,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 
 @Entity
-public class Address {
+public class Address extends AbstractEntity<Address> {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -16,14 +16,6 @@ public class Address {
     private String city;
     private int zipCode;
     private String land;
-
-    public Address(int number, String road, String city, int zipCode, String land) {
-        this.number = number;
-        this.road = road;
-        this.city = city;
-        this.zipCode = zipCode;
-        this.land = land;
-    }
 
     public int getNumber() {
         return this.number;
