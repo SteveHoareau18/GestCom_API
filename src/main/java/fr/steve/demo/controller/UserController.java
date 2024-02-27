@@ -37,9 +37,11 @@ public class UserController {
 
     @PostMapping("/user/create")
     public User create(@RequestBody @NonNull User user) {
-        user.setName(user.getName().toUpperCase());
-        user.setFirstName(
-                user.getFirstName().substring(0, 1).toUpperCase() + user.getFirstName().substring(1).toLowerCase());
+        // @TODO
+        // user.setName(user.getName().toUpperCase());
+        // user.setFirstName(
+        // user.getFirstName().substring(0, 1).toUpperCase() +
+        // user.getFirstName().substring(1).toLowerCase());
         userRepository.save(user);
         return user;
     }
