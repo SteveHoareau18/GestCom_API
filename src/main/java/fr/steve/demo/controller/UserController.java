@@ -5,6 +5,7 @@ import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
 import org.springframework.lang.NonNull;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -19,6 +20,7 @@ import fr.steve.demo.repository.UserRepository;
 import jakarta.transaction.Transactional;
 
 @RestController
+@CrossOrigin(origins = "*")
 public class UserController {
 
     private UserRepository userRepository;
@@ -35,6 +37,9 @@ public class UserController {
 
     @PostMapping("/user/create")
     public User create(@RequestBody @NonNull User user) {
+        user.setName(user.getName().toUpperCase());
+        user.setFirstName(
+                user.getFirstName().substring(0, 1).toUpperCase() + user.getFirstName().substring(1).toLowerCase());
         userRepository.save(user);
         return user;
     }
@@ -48,6 +53,11 @@ public class UserController {
     @Transactional
     public User update(@RequestBody @NonNull User user, @PathVariable(value = "id") @NonNull Integer id) {
         User userDb = userRepository.findById(id).orElseThrow(() -> new UserNotFoundException(id));
+        if (user.getName() != null)
+            user.setName(user.getName().toUpperCase());
+        if (user.getFirstName() != null)
+            user.setFirstName(
+                    user.getFirstName().substring(0, 1).toUpperCase() + user.getFirstName().substring(1).toLowerCase());
         userDb.merge(user);
         this.userRepository.save(userDb);
         return userDb;
