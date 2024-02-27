@@ -53,6 +53,7 @@ public class UserController {
         return userDb;
     }
 
+    @SuppressWarnings("null")
     @DeleteMapping("/user/delete/{id}")
     public String delete(@PathVariable(value = "id") @NonNull Integer id) {
         User userDb = userRepository.findById(id).orElseThrow(() -> new UserNotFoundException(id));
