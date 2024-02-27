@@ -61,9 +61,9 @@ public class UserController {
     }
 
     @DeleteMapping("/user/delete/{id}")
-    public Integer delete(@PathVariable(value = "id") @NonNull Integer id) {
+    public String delete(@PathVariable(value = "id") @NonNull Integer id) {
         User userDb = userRepository.findById(id).orElseThrow(() -> new UserNotFoundException(id));
         userRepository.delete(userDb);
-        return id;
+        return "L'utilisateur ayant l'id: " + id + ", a bien été supprimé.";
     }
 }
