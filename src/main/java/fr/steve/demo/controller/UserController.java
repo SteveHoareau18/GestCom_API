@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import fr.steve.demo.entity.User;
@@ -20,7 +21,8 @@ import fr.steve.demo.repository.UserRepository;
 import jakarta.transaction.Transactional;
 
 @RestController
-@CrossOrigin(origins = "*")
+@CrossOrigin(origins = "*", methods = { RequestMethod.DELETE, RequestMethod.GET, RequestMethod.POST,
+        RequestMethod.PUT })
 public class UserController {
 
     private UserRepository userRepository;
@@ -37,11 +39,6 @@ public class UserController {
 
     @PostMapping("/user/create")
     public User create(@RequestBody @NonNull User user) {
-        // @TODO
-        // user.setName(user.getName().toUpperCase());
-        // user.setFirstName(
-        // user.getFirstName().substring(0, 1).toUpperCase() +
-        // user.getFirstName().substring(1).toLowerCase());
         userRepository.save(user);
         return user;
     }
