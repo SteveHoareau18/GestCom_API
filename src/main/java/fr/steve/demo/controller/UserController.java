@@ -52,11 +52,6 @@ public class UserController {
     @Transactional
     public User update(@RequestBody @NonNull User user, @PathVariable(value = "id") @NonNull Integer id) {
         User userDb = userRepository.findById(id).orElseThrow(() -> new UserNotFoundException(id));
-        if (user.getName() != null)
-            user.setName(user.getName().toUpperCase());
-        if (user.getFirstName() != null)
-            user.setFirstName(
-                    user.getFirstName().substring(0, 1).toUpperCase() + user.getFirstName().substring(1).toLowerCase());
         userDb.merge(user);
         this.userRepository.save(userDb);
         return userDb;
