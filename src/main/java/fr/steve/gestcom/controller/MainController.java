@@ -1,4 +1,4 @@
-package fr.steve.demo.controller;
+package fr.steve.gestcom.controller;
 
 import org.springframework.web.bind.annotation.RestController;
 

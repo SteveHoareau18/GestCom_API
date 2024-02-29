@@ -1,4 +1,4 @@
-package fr.steve.demo.controller;
+package fr.steve.gestcom.controller;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -13,9 +13,9 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import fr.steve.demo.entity.User;
-import fr.steve.demo.exceptions.UserNotFoundException;
-import fr.steve.demo.repository.UserRepository;
+import fr.steve.gestcom.entity.User;
+import fr.steve.gestcom.exceptions.UserNotFoundException;
+import fr.steve.gestcom.repository.UserRepository;
 import jakarta.transaction.Transactional;
 
 @RestController

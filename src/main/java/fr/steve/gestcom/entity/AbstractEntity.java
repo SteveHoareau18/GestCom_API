@@ -1,4 +1,4 @@
-package fr.steve.demo.entity;
+package fr.steve.gestcom.entity;
 
 import java.lang.reflect.Field;
 
