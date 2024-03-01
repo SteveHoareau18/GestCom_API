@@ -5,3 +5,5 @@ spring.datasource.username=
 spring.datasource.password=
 spring.datasource.driver-class-name=com.mysql.cj.jdbc.Driver
 springdoc.swagger-ui.path=/swagger-ui.html
+basic.user=
+basic.password=
