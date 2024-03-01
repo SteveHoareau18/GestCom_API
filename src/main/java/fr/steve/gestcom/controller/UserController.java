@@ -56,7 +56,6 @@ public class UserController {
             userDb.setFirstName(user.getFirstName());
         if (user.getName() != null)
             userDb.setName(user.getName());
-        // userDb.merge(user);
         if (userDb != null)
             this.userRepository.save(userDb);
         return userDb;
