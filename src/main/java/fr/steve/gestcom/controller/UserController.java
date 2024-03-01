@@ -48,8 +48,17 @@ public class UserController {
     @Transactional
     public User update(@RequestBody @NonNull User user, @PathVariable(value = "id") @NonNull Integer id) {
         User userDb = userRepository.findById(id).orElseThrow(() -> new UserNotFoundException(id));
-        userDb.merge(user);
-        this.userRepository.save(userDb);
+        if (user.getAddress() != null)
+            userDb.setAddress(user.getAddress());
+        if (user.getBornDate() != null)
+            userDb.setBornDate(user.getBornDate());
+        if (user.getFirstName() != null)
+            userDb.setFirstName(user.getFirstName());
+        if (user.getName() != null)
+            userDb.setName(user.getName());
+        // userDb.merge(user);
+        if (userDb != null)
+            this.userRepository.save(userDb);
         return userDb;
     }
 
